@@ -12,7 +12,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _title() {
-    return const Text('TravoVN');
+    return const Text(
+      'TravoVN',
+      style: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 30.0,
+      ),
+    );
   }
 
   Widget _Uid() {
@@ -29,17 +36,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
         title: _title(),
       ),
       body: Container(
         height: double.infinity,
         width: double.infinity,
         padding: const EdgeInsets.all(20),
-        child: Column(children: <Widget>[
-          _Uid(),
-          _signOutBtn(),
-        ]),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _Uid(),
+              _signOutBtn(),
+            ]),
       ),
     );
   }

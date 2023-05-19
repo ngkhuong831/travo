@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:travo/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travo/widgets/login_form_widget.dart';
@@ -43,13 +44,32 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Widget _title() {
-    return const Text('TravoVN');
+  Widget _appname() {
+    return Stack(
+      children: [
+        Text(
+          'Travo',
+          style: GoogleFonts.pacifico(
+            color: Colors.deepOrangeAccent,
+            fontWeight: FontWeight.bold,
+            fontSize: 98.0,
+          ),
+        ),
+        Text(
+          'Travo',
+          style: GoogleFonts.pacifico(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 102.0,
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _formtitle() {
     return Text(
-      isLogin ? 'Login' : 'Register',
+      isLogin ? 'Sign In' : 'Sign Up',
       style: const TextStyle(
         color: Color(0xff333333),
         fontWeight: FontWeight.bold,
@@ -72,6 +92,10 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _submitBtn() {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+        textStyle: const TextStyle(fontWeight: FontWeight.bold),
+      ),
       onPressed:
           isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
       child: Text(isLogin ? 'Login' : 'Register'),
@@ -92,10 +116,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _errorMessage() {
-    return Text(
-      errorMessage == '' ? '' : 'Hmm! $errorMessage',
-      style: const TextStyle(
-        color: Color.fromARGB(255, 255, 0, 0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        errorMessage == '' ? '' : 'Hmm! $errorMessage',
+        style: const TextStyle(
+          color: Color.fromARGB(255, 255, 0, 0),
+        ),
       ),
     );
   }
@@ -103,13 +130,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: _title(),
-      ),
       body: Stack(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery.of(context).size.height * 0.45,
             decoration: BoxDecoration(
               image: DecorationImage(
                   image: Image.asset("assets/images/wallpaper.jpg").image,
@@ -118,6 +142,9 @@ class _LoginPageState extends State<LoginPage> {
                 bottomLeft: Radius.circular(50),
                 bottomRight: Radius.circular(50),
               ),
+            ),
+            child: Center(
+              child: _appname(),
             ),
           ),
           Center(
