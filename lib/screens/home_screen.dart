@@ -40,14 +40,11 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _title() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Text(
-        'Travo',
-        style: GoogleFonts.pacifico(
-          color: Colors.deepPurple,
-          fontWeight: FontWeight.bold,
-        ),
+    return Text(
+      'Travo',
+      style: GoogleFonts.pacifico(
+        color: Colors.deepPurple,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -69,7 +66,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget _ava(context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(10.0),
       child: CircleAvatar(
         radius: MediaQuery.of(context).size.width * 0.1,
         backgroundImage:
@@ -79,11 +76,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _signOutBtn() {
-    return ElevatedButton(
-      onPressed: signOut,
-      child: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text('Sign Out'),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: ElevatedButton(
+        onPressed: signOut,
+        child: const Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Text('Sign Out'),
+        ),
       ),
     );
   }
@@ -143,10 +143,16 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _searchbar(context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: 30,
-      child: SearchBar(),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: SearchBar(
+          textStyle: MaterialStateProperty.all(
+            const TextStyle(fontSize: 12.0),
+          ),
+        ),
+      ),
     );
   }
 
@@ -155,7 +161,7 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.25,
+        height: MediaQuery.of(context).size.width * 0.6,
         child: Card(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -187,7 +193,7 @@ class HomeScreen extends StatelessWidget {
         itemCount: categories.length,
         itemBuilder: (BuildContext context, int index) => Card(
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.5,
+            width: MediaQuery.of(context).size.width * 0.6,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: Colors.white,
@@ -210,7 +216,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -238,10 +244,10 @@ class HomeScreen extends StatelessWidget {
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        itemCount: 15,
+        itemCount: 10,
         itemBuilder: (BuildContext context, int index) => Card(
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.5,
+            width: MediaQuery.of(context).size.width * 0.6,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: Colors.white,
@@ -264,16 +270,16 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                           bottomRight: Radius.circular(12),
                           bottomLeft: Radius.circular(12))),
                   padding: const EdgeInsets.all(12),
-                  child: const Text(
-                    "Temp",
-                    style: TextStyle(
+                  child: Text(
+                    "Temp $index",
+                    style: const TextStyle(
                       color: Color(0xff333333),
                       fontWeight: FontWeight.bold,
                     ),
@@ -290,15 +296,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: _profileDrawer(context),
+      endDrawer: _profileDrawer(context),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.deepPurple),
         backgroundColor: Colors.transparent,
-        actions: [_title()],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(30.0),
-          child: _searchbar(context),
-        ),
+        title: _title(),
       ),
       body: Container(
         height: double.infinity,
@@ -308,6 +310,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                _searchbar(context),
                 _carousel(context),
                 _categorycard(context, 'Category', _categoryList()),
                 _categorycard(context, 'Recommendations', _temp()),

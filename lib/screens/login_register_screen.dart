@@ -165,9 +165,9 @@ class _LoginPageState extends State<LoginPage> {
                 bottomRight: Radius.circular(50),
               ),
             ),
-            child: Center(
-              child: _appname(),
-            ),
+            // child: Center(
+            //   child: _appname(),
+            // ),
           ),
           Center(
             child: Column(
