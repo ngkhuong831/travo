@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "978146309733",
+    "firebase_url": "https://fir-auth-37000-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "fir-auth-37000",
+    "storage_bucket": "fir-auth-37000.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978146309733:android:519f6b9121c76fed20f88c",
+        "android_client_info": {
+          "package_name": "com.example.travo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978146309733-p24gs8t3o3tb760n3rh8rumsvf6qt4gf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEjaj7KkWUUidau16D1wkskoDdKO-WgGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978146309733-p24gs8t3o3tb760n3rh8rumsvf6qt4gf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
