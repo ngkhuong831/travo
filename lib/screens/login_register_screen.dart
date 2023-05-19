@@ -47,6 +47,17 @@ class _LoginPageState extends State<LoginPage> {
     return const Text('TravoVN');
   }
 
+  Widget _formtitle() {
+    return Text(
+      isLogin ? 'Login' : 'Register',
+      style: const TextStyle(
+        color: Color(0xff333333),
+        fontWeight: FontWeight.bold,
+        fontSize: 30.0,
+      ),
+    );
+  }
+
   Widget _entryField(
     String title,
     TextEditingController controller,
@@ -81,7 +92,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _errorMessage() {
-    return Text(errorMessage == '' ? '' : 'Hmm! $errorMessage');
+    return Text(
+      errorMessage == '' ? '' : 'Hmm! $errorMessage',
+      style: const TextStyle(
+        color: Color.fromARGB(255, 255, 0, 0),
+      ),
+    );
   }
 
   @override
@@ -90,17 +106,46 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: _title(),
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        child: Column(children: <Widget>[
-          _entryField('Email', _emailController),
-          _entryField('Password', _passwordController),
-          _errorMessage(),
-          _submitBtn(),
-          _loginOrRegisterBtn(),
-        ]),
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.4,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: Image.asset("assets/images/wallpaper.jpg").image,
+                  fit: BoxFit.fill),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
+              ),
+            ),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  color: Colors.white,
+                  margin: const EdgeInsets.all(20.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(children: <Widget>[
+                      _formtitle(),
+                      _entryField('Email', _emailController),
+                      _entryField('Password', _passwordController),
+                      _errorMessage(),
+                      _submitBtn(),
+                      _loginOrRegisterBtn(),
+                    ]),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
