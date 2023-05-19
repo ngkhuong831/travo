@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
           style: GoogleFonts.pacifico(
             color: Colors.deepOrangeAccent,
             fontWeight: FontWeight.bold,
-            fontSize: 98.0,
+            fontSize: 90.0,
           ),
         ),
         Text(
@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
           style: GoogleFonts.pacifico(
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 102.0,
+            fontSize: 94.0,
           ),
         ),
       ],

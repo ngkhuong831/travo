@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^4.6.1
   google_fonts: ^4.0.4
   image_picker: ^0.8.7+5
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,25 @@ flutter:
     - assets/images/noservice.jpg
     - assets/images/notfound.png
     - assets/images/defaultUser.png
+    - assets/images/carousel/carousel (1).jpg
+    - assets/images/carousel/carousel (1).jpg
+    - assets/images/carousel/carousel (2).jpg
+    - assets/images/carousel/carousel (3).jpg
+    - assets/images/carousel/carousel (4).jpg
+    - assets/images/carousel/carousel (5).jpg
+    - assets/images/carousel/carousel (6).jpg
+    - assets/images/carousel/carousel (7).jpg
+    - assets/images/carousel/carousel (8).jpg
+    - assets/images/carousel/carousel (9).jpg
+    - assets/images/carousel/carousel (10).jpg
+    - assets/images/categories/1.png
+    - assets/images/categories/2.png
+    - assets/images/categories/3.png
+    - assets/images/categories/4.png
+    - assets/images/categories/5.png
+    - assets/images/categories/6.png
+    - assets/images/categories/7.png
+    - assets/images/categories/0.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
