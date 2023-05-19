@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travo/auth/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:travo/widgets/login_form_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   String errorMessage = '';
   bool isLogin = true;
 
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -34,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> createUserWithEmailAndPassword() async {
     try {
       await Auth().createUserWithEmailAndPassword(
+        displayName: _nameController.text,
         email: _emailController.text,
         password: _passwordController.text,
       );
@@ -93,38 +94,59 @@ class _LoginPageState extends State<LoginPage> {
   Widget _submitBtn() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-        textStyle: const TextStyle(fontWeight: FontWeight.bold),
-      ),
+          backgroundColor: Colors.deepPurple,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 30,
+            vertical: 10,
+          )),
       onPressed:
           isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
-      child: Text(isLogin ? 'Login' : 'Register'),
+      child: Text(
+        isLogin ? 'Login' : 'Register',
+        style: const TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 
   Widget _loginOrRegisterBtn() {
-    return TextButton(
-      onPressed: () {
-        setState(() {
-          isLogin = !isLogin;
-        });
-      },
-      child: Text(isLogin
-          ? 'No account? Register now!'
-          : 'Got an account? Sign in now!'),
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                isLogin = !isLogin;
+              });
+            },
+            child: Text(isLogin
+                ? 'No account? Register now!'
+                : 'Got an account? Sign in now!'),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _errorMessage() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        errorMessage == '' ? '' : 'Hmm! $errorMessage',
-        style: const TextStyle(
-          color: Color.fromARGB(255, 255, 0, 0),
+    if (errorMessage == '') {
+      return Container();
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Text(
+          errorMessage == '' ? '' : 'Hmm! $errorMessage',
+          style: const TextStyle(
+            color: Color.fromARGB(255, 255, 0, 0),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   @override
@@ -161,11 +183,14 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(children: <Widget>[
                       _formtitle(),
+                      isLogin
+                          ? const SizedBox()
+                          : _entryField('Name', _nameController),
                       _entryField('Email', _emailController),
                       _entryField('Password', _passwordController),
                       _errorMessage(),
-                      _submitBtn(),
                       _loginOrRegisterBtn(),
+                      _submitBtn(),
                     ]),
                   ),
                 ),

@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^2.13.0
   firebase_auth: ^4.6.1
   google_fonts: ^4.0.4
+  image_picker: ^0.8.7+5
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
     - assets/images/thumbnail2.jpg
     - assets/images/noservice.jpg
     - assets/images/notfound.png
+    - assets/images/defaultUser.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
