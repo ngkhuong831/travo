@@ -14,19 +14,19 @@
 ## No Description, here's the UI up to this moment
 
 1. Sign In - Register Screen
-<img src="md/1.png" alt="Sign In">
+<img src="md/1.PNG" alt="Sign In">
 
 2. Home Screen
-<img src="md/2.png" alt="Home">
+<img src="md/2.PNG" alt="Home">
 
 3. Home - Open Drawer
-<img src="md/3.png" alt="Drawer">
+<img src="md/3.PNG" alt="Drawer">
 
 4. Listing Screen
-<img src="md/4.png" alt="Listings">
+<img src="md/4.PNG" alt="Listings">
 
 5. Detail Screen
-<img src="md/5.png" alt="Details">
+<img src="md/5.PNG" alt="Details">
 
 
 ## Creators
