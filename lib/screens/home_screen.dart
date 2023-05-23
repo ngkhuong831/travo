@@ -1,3 +1,4 @@
+// ignore: unused_import
 import 'dart:js';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,7 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:travo/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:travo/screens/listing_screen.dart';
+import 'package:travo/screens/profile_screen.dart';
+import 'package:travo/screens/setting_screen.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
@@ -35,8 +40,26 @@ class HomeScreen extends StatelessWidget {
     "Beaches",
   ];
 
+  List<Color> themeCodes = [
+    Color(0xffffadad),
+    Color(0xffffd6a5),
+    Color(0xffF9e698),
+    Color(0xff0aa374),
+    Color(0xff9bf6ff),
+    Color(0xffa0c4ff),
+    Color(0xffbdb2ff),
+    Color(0xffffc6ff),
+  ];
+
   Future<void> signOut() async {
     await Auth().signOut();
+  }
+
+  void redirect(destination, context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => destination()),
+    );
   }
 
   Widget _title() {
@@ -75,14 +98,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _signOutBtn() {
+  Widget _btn(name, Function() func) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: ElevatedButton(
-        onPressed: signOut,
-        child: const Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Text('Sign Out'),
+        onPressed: func,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(name),
         ),
       ),
     );
@@ -97,7 +120,26 @@ class HomeScreen extends StatelessWidget {
             _ava(context),
             _displayName(),
             _Uid(),
-            _signOutBtn(),
+            _btn("Sign Out", signOut),
+            _btn(
+              "Profile",
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                );
+              },
+            ),
+            _btn(
+              "Settings",
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingScreen()),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -188,52 +230,67 @@ class HomeScreen extends StatelessWidget {
   Widget _categoryList() {
     return Expanded(
       child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
-        itemBuilder: (BuildContext context, int index) => Card(
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.6,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.white,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(12),
-                          topLeft: Radius.circular(12)),
-                      image: DecorationImage(
-                        image:
-                            AssetImage("assets/images/categories/$index.png"),
-                        fit: BoxFit.fill,
-                      ),
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: categories.length,
+          itemBuilder: (BuildContext context, int index) => GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ListingScreen(
+                      name: categories[index],
+                      photoURL: "assets/images/categories/$index.png",
+                      themeCode: themeCodes[index],
                     ),
+                  ),
+                );
+              },
+              child: _cardListItem(context, index))),
+    );
+  }
+
+  Widget _cardListItem(context, index) {
+    return Card(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.55,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(12),
+                      topLeft: Radius.circular(12)),
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/categories/$index.png"),
+                    fit: BoxFit.fill,
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(12),
-                          bottomLeft: Radius.circular(12))),
-                  padding: const EdgeInsets.all(12),
-                  child: Text(
-                    categories[index],
-                    style: const TextStyle(
-                      color: Color(0xff333333),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
-          ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.55,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(12),
+                      bottomLeft: Radius.circular(12))),
+              padding: const EdgeInsets.all(12),
+              child: Text(
+                categories[index],
+                style: const TextStyle(
+                  color: Color(0xff333333),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -242,52 +299,56 @@ class HomeScreen extends StatelessWidget {
   Widget _temp() {
     return Expanded(
       child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: 10,
-        itemBuilder: (BuildContext context, int index) => Card(
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.6,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.white,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(12),
-                          topLeft: Radius.circular(12)),
-                      image: DecorationImage(
-                        image: AssetImage(
-                            "assets/images/carousel/carousel (1).jpg"),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) =>
+              _tempListItem(context, index)),
+    );
+  }
+
+  Widget _tempListItem(context, index) {
+    return Card(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.55,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(12),
+                      topLeft: Radius.circular(12)),
+                  image: DecorationImage(
+                    image:
+                        AssetImage("assets/images/carousel/carousel (1).jpg"),
+                    fit: BoxFit.fill,
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(12),
-                          bottomLeft: Radius.circular(12))),
-                  padding: const EdgeInsets.all(12),
-                  child: Text(
-                    "Temp $index",
-                    style: const TextStyle(
-                      color: Color(0xff333333),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
-          ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.55,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(12),
+                      bottomLeft: Radius.circular(12))),
+              padding: const EdgeInsets.all(12),
+              child: Text(
+                "Temp $index",
+                style: const TextStyle(
+                  color: Color(0xff333333),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -308,14 +369,15 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _searchbar(context),
-                _carousel(context),
-                _categorycard(context, 'Category', _categoryList()),
-                _categorycard(context, 'Recommendations', _temp()),
-                _categorycard(context, 'Nearby', _temp()),
-              ]),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              _searchbar(context),
+              _carousel(context),
+              _categorycard(context, 'Category', _categoryList()),
+              _categorycard(context, 'Recommendations', _temp()),
+              _categorycard(context, 'Nearby', _temp()),
+            ],
+          ),
         ),
       ),
     );
