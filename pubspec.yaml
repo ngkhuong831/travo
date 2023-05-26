@@ -67,7 +67,6 @@ flutter:
   assets:
     - assets/images/wallpaper.jpg
     - assets/images/thumbnail2.jpg
-    - assets/images/noservice.jpg
     - assets/images/notfound.png
     - assets/images/defaultUser.png
     - assets/images/carousel/temp.png
@@ -90,6 +89,9 @@ flutter:
     - assets/images/categories/6.png
     - assets/images/categories/7.png
     - assets/images/categories/0.png
+    - assets/images/logo/logo.png
+    - assets/images/logo/logo-white.png
+    - assets/images/noservice.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

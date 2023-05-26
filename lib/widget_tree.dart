@@ -2,6 +2,7 @@ import 'package:travo/auth/auth.dart';
 import 'package:travo/screens/home_screen.dart';
 import 'package:travo/screens/login_register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:travo/screens/splash_screen.dart';
 
 class WidgetTree extends StatefulWidget {
   const WidgetTree({super.key});

@@ -120,7 +120,6 @@ class HomeScreen extends StatelessWidget {
             _ava(context),
             _displayName(),
             _Uid(),
-            _btn("Sign Out", signOut),
             _btn(
               "Profile",
               () {
@@ -140,6 +139,7 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             ),
+            _btn("Sign Out", signOut),
           ],
         ),
       ),

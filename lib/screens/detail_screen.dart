@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:travo/screens/features/navigation.dart';
 
 // ignore: must_be_immutable
 class DetailScreen extends StatelessWidget {
@@ -97,18 +98,27 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
+  Widget _FAB(context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MapScreen()),
+          );
+        },
+        label: Text('Let\s Go!!!'),
+        icon: Icon(Icons.edit),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: FloatingActionButton.extended(
-          onPressed: () {},
-          label: Text('Let\s Go!!!'),
-          icon: Icon(Icons.edit),
-        ),
-      ),
+      floatingActionButton: _FAB(context),
       appBar: AppBar(
         automaticallyImplyLeading: true,
         title: const Text('Placeholder'),
