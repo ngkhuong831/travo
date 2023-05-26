@@ -10,6 +10,8 @@
 
 
 ## No Description, here's the UI up to this moment
+0. Splash Screen
+<img src="md/0.PNG" alt="Splash">
 
 1. Sign In - Register Screen
 <img src="md/1.PNG" alt="Sign In">
