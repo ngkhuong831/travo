@@ -3,7 +3,6 @@ import 'dart:js';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travo/auth/auth.dart';
-import 'package:travo/screens/home_screen.dart';
 
 import 'features/booking.dart';
 import 'features/check_in_list.dart';

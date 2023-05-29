@@ -28,7 +28,8 @@
 5. Detail Screen
 <img src="md/5.PNG" alt="Details">
 
-
+6. Check-Ins Listing Screen
+<img src="md/6.PNG" alt="Check-Ins List">
 ## Creators
 
 **Creator 1**

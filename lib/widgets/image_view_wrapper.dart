@@ -28,7 +28,7 @@ class ImageFullScreenWrapperWidget extends StatelessWidget {
           ),
         );
       },
-      child: child,
+      child: FittedBox(fit: BoxFit.cover, child: child),
     );
   }
 }
