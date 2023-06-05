@@ -109,7 +109,7 @@ class DetailScreen extends StatelessWidget {
           );
         },
         label: Text('Let\s Go!!!'),
-        icon: Icon(Icons.edit),
+        icon: Icon(Icons.room),
       ),
     );
   }

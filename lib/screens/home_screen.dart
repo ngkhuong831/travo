@@ -10,6 +10,9 @@ import 'package:travo/screens/listing_screen.dart';
 import 'package:travo/screens/profile_screen.dart';
 import 'package:travo/screens/setting_screen.dart';
 
+import '../widgets/search_delegate.dart';
+import 'detail_screen.dart';
+
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -44,7 +47,7 @@ class HomeScreen extends StatelessWidget {
     Color(0xffffadad),
     Color(0xffffd6a5),
     Color(0xffF9e698),
-    Color(0xff0aa374),
+    Color(0xff42d6a4),
     Color(0xff9bf6ff),
     Color(0xffa0c4ff),
     Color(0xffbdb2ff),
@@ -53,13 +56,6 @@ class HomeScreen extends StatelessWidget {
 
   Future<void> signOut() async {
     await Auth().signOut();
-  }
-
-  void redirect(destination, context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => destination()),
-    );
   }
 
   Widget _title() {
@@ -72,7 +68,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _Uid() {
+  Widget _uid() {
     return Text(user?.email ?? 'User Email');
   }
 
@@ -119,26 +115,19 @@ class HomeScreen extends StatelessWidget {
           children: [
             _ava(context),
             _displayName(),
-            _Uid(),
-            _btn(
-              "Profile",
-              () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                );
-              },
-            ),
-            _btn(
-              "Settings",
-              () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SettingScreen()),
-                );
-              },
-            ),
+            _uid(),
+            _btn("Profile", () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+            }),
+            _btn("Settings", () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingScreen()),
+              );
+            }),
             _btn("Sign Out", signOut),
           ],
         ),
@@ -190,6 +179,12 @@ class HomeScreen extends StatelessWidget {
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: SearchBar(
+          onTap: () {
+            showSearch(
+              context: context,
+              delegate: CustomSearchDelegate(),
+            );
+          },
           textStyle: MaterialStateProperty.all(
             const TextStyle(fontSize: 12.0),
           ),
@@ -198,29 +193,27 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _categorycard(context, title, child) {
+  Widget _contentsection(context, title, child) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.width * 0.6,
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
                 ),
-                child,
-              ],
-            ),
+              ),
+              child,
+            ],
           ),
         ),
       ),
@@ -229,92 +222,81 @@ class HomeScreen extends StatelessWidget {
 
   Widget _categoryList() {
     return Expanded(
-      child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: categories.length,
-          itemBuilder: (BuildContext context, int index) => GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ListingScreen(
-                      name: categories[index],
-                      photoURL: "assets/images/categories/$index.png",
-                      themeCode: themeCodes[index],
-                    ),
-                  ),
-                );
-              },
-              child: _cardListItem(context, index))),
-    );
-  }
-
-  Widget _cardListItem(context, index) {
-    return Card(
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.55,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 1,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(12),
-                      topLeft: Radius.circular(12)),
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/categories/$index.png"),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.55,
-              decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(12),
-                      bottomLeft: Radius.circular(12))),
-              padding: const EdgeInsets.all(12),
-              child: Text(
-                categories[index],
-                style: const TextStyle(
-                  color: Color(0xff333333),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            )
-          ],
+        scrollDirection: Axis.horizontal,
+        itemCount: categories.length,
+        itemBuilder: (BuildContext context, int index) => _categoryBtn(
+          Icons.emoji_emotions,
+          themeCodes[index],
+          index,
+          context,
         ),
       ),
     );
   }
 
-  Widget _temp() {
+  Widget _categoryBtn(icon, color, index, context) {
+    return SizedBox(
+      child: Column(
+        children: [
+          FloatingActionButton(
+            elevation: 0,
+            backgroundColor: color,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListingScreen(
+                    name: categories[index],
+                    photoURL: "assets/images/categories/$index.png",
+                    themeCode: themeCodes[index],
+                  ),
+                ),
+              );
+            },
+            child: Icon(icon, color: Colors.white),
+          ),
+          FittedBox(
+            child: Text(
+              categories[index],
+              style: const TextStyle(
+                color: Color(0xff333333),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _tempList() {
     return Expanded(
       child: ListView.builder(
-          shrinkWrap: true,
+          shrinkWrap: false,
           scrollDirection: Axis.horizontal,
           itemCount: 10,
-          itemBuilder: (BuildContext context, int index) =>
-              _tempListItem(context, index)),
+          itemBuilder: (BuildContext context, int index) => GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailScreen(),
+                  ),
+                );
+              },
+              child: _tempListItem(context, index))),
     );
   }
 
   Widget _tempListItem(context, index) {
     return Card(
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.55,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -373,9 +355,9 @@ class HomeScreen extends StatelessWidget {
             children: <Widget>[
               _searchbar(context),
               _carousel(context),
-              _categorycard(context, 'Category', _categoryList()),
-              _categorycard(context, 'Recommendations', _temp()),
-              _categorycard(context, 'Nearby', _temp()),
+              _contentsection(context, 'Category', _categoryList()),
+              _contentsection(context, 'Recommendations', _tempList()),
+              _contentsection(context, 'Nearby', _tempList()),
             ],
           ),
         ),
