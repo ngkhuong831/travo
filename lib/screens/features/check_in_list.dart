@@ -11,6 +11,7 @@ import 'check_in_create.dart';
 class CheckInListingScreen extends StatelessWidget {
   CheckInListingScreen({super.key});
 
+  // Hard code data for display
   CheckIn tmp = CheckIn(
     123,
     456,
