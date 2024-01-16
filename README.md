@@ -8,6 +8,29 @@
   </p>
 </p>
 
+### WORKING ON: DATA POOL AND BACKEND APIS
+
+## HOW TO RUN
+
+0. Make sure you have installed a stable version of Flutter and have related Android SDKs downloaded.
+
+1. Pull this repo / Download and unzip this repo.
+
+2. Open Terminal.
+
+3. Run 'flutter pub get' to fetch all dependencies.
+
+  - If problems arises, run 'flutter doctor' for diagnosis and fix it correspondingly.
+
+4. Turn on your Virtual Device / Plug in your debugging device 
+
+5. Run 'flutter run'.
+
+  - In case you just want to see a quick preview, you can use the Google Dev Tool to see a preview of the UI:
+    + Terminal will display a list of options to run on ('Window', 'Chrome',etc...)
+    + Select Chrome using the corresponding number
+    + Once opened, press F12 to turn on DevTools
+    + Choose screen sizes by device options to view the UI correspondingly
 
 ## No Description, here's the UI up to this moment
 0. Splash Screen
